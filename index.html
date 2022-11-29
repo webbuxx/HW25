@@ -1,0 +1,250 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+<!-- Verplichte metatags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aan de slag met jQuery</title>
+<meta name="description" content="Huiswerkopgave25">
+<meta name="keywords" content="javascript, jquery">
+<meta name="author" content="Rob Tijbosch">
+<!-- Bootstrap-CSS -->
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+crossorigin="anonymous">
+<link href="CSS/Stylesheet.css" rel="stylesheet">
+<!-- jQuery -->
+<script type="text/JavaScript"src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+<noscript>
+    Om deze website optimaal te gebruiken is het noodzakelijk om JavaScript te activeren.
+</noscript>
+<script>
+   // global variables 
+   var hoek = ["11","13","31","33"];
+   var kant = ["12","21","23","32"];
+   var veld = hoek.concat(kant);
+   var veld = veld.concat("22");
+   var forcedmove = false;
+   // initialisatie
+   $("#11").css({backgroundColor: 'purple'});
+   $("#12").css({backgroundColor: 'green'});
+   $("#13").css({backgroundColor: 'lightbrown'});
+   $("#21").css({backgroundColor: 'lightgreen'});
+   $("#22").css({backgroundColor: 'yellow'});
+   $("#23").css({backgroundColor: 'pink'});
+   $("#31").css({backgroundColor: 'orange'});
+   $("#32").css({backgroundColor: 'magenta'});
+   $("#33").css({backgroundColor: 'indigo'});
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+    $(".box").click(function(id) {
+    //var naam = $("#idTekstveld").val();
+    var _kleur = $(this).css('background-color');
+    var _id = $(this).attr("id")
+    window.alert(_id + _kleur + IsFreeCell($(this).attr("id")));
+    if (_kleur != "rgb(255, 0, 0)" && _kleur != "rgb(255, 255, 255)" ) {
+        $(this).css({backgroundColor: 'red'});
+        // find response
+        if (!CheckForcedMove()){
+            window.alert("no forced move");
+            if (!CheckFreeCorner()){
+                window.alert("no free corner");
+                if (!CheckFreeSide()) {
+                    window.alert("no more moves");
+                }
+
+            }
+        }
+    }
+    });
+    });
+</script>
+</head>
+<body  style="text-align: center">
+  <div class="container-sm">
+    <p>
+      <h2>Klik op de vlakken en probeer 3 rode vlakken op een rij te krijgen.</h2>
+    </p>
+    <div class="row row-cols-3  justify-content-center">
+        <div class="col-9 col-sm-3 " > 
+            <div class="box" id="11"></div>
+        </div>
+        <div class="col-9 col-sm-3" >
+            <div class="box" id="12"></div>
+        </div>
+        <div class="col-9 col-sm-3">
+            <div class="box" id="13"></div>
+        </div>
+     </div>
+     <br>
+     <div class="row row-cols-3  justify-content-center">
+        <div class="col-9 col-sm-3 " > 
+            <div class="box" id="21"></div>
+        </div>
+        <div class="col-9 col-sm-3" >
+            <div class="box" id="22"></div>
+        </div>
+        <div class="col-9 col-sm-3">
+            <div class="box" id="23"></div>
+        </div>
+     </div>
+     <br>
+     <div class="row row-cols-3  justify-content-center">
+        <div class="col-9 col-sm-3 " > 
+            <div class="box" id="31"></div>
+        </div>
+        <div class="col-9 col-sm-3" >
+            <div class="box" id="32"></div>
+        </div>
+        <div class="col-9 col-sm-3">
+            <div class="box" id="33"></div>
+        </div>
+     </div>
+     <br>
+       <footer>
+        <div style="height: 200px; background-color:whitesmoke">
+        Copyright © 2022 Rob Tijbosch | 's-Hertogenbosch | Alle rechten voorbehouden | Rompert-park 33 ’s-Hertogenbosch | info@RobsSite.nl
+        </div>  
+     </footer>
+  </div>
+  <script>
+  // initialisatie
+  $("#11").css({backgroundColor: 'lightblue'});
+  $("#12").css({backgroundColor: 'green'});
+  $("#13").css({backgroundColor: 'lightbrown'});
+  $("#21").css({backgroundColor: 'lightgreen'});
+  $("#22").css({backgroundColor: 'yellow'});
+  $("#23").css({backgroundColor: 'darkblue'});
+  $("#31").css({backgroundColor: 'orange'});
+  $("#32").css({backgroundColor: 'darkgreen'});
+  $("#33").css({backgroundColor: 'indigo'});
+
+  function IsFreeCell(id) {
+    var _id = "#" + id;
+    return ($(_id).css('background-color') != "rgb(255, 0, 0)"  &&
+            $(_id).css('background-color') != "rgb(255, 255, 255)") ;
+  }
+
+  function CheckFreeCorner() {
+    if (IsFreeCell("11")) { 
+         $("#11").css({backgroundColor: 'white'})
+            return true;
+        };
+    if (IsFreeCell("13")) {
+         $("#13").css({backgroundColor: 'white'})
+            return true;
+        };
+    if (IsFreeCell("31")) {
+         $("#31").css({backgroundColor: 'white'})
+            return true;
+        };
+    if (IsFreeCell("33") ) {
+         $("#33").css({backgroundColor: 'white'})
+            return true;
+        };
+    return false;
+  }
+
+  
+  function CheckFreeSide() {
+    if (IsFreeCell("12")) { 
+         $("#12").css({backgroundColor: 'white'})
+            return true;
+        };
+    if (IsFreeCell("21")) {
+         $("#21").css({backgroundColor: 'white'})
+            return true;
+        };
+    if (IsFreeCell("23")) {
+         $("#23").css({backgroundColor: 'white'})
+            return true;
+        };
+    if (IsFreeCell("32") ) {
+         $("#32").css({backgroundColor: 'white'})
+            return true;
+        };
+    return false;
+  }
+
+  function CheckForcedMove() {
+  if (IsFreeCell("22")) {
+        $("#22").css({backgroundColor: 'white'})
+        return true;
+        } else {
+            if ( (IsFreeCell("13")) &&
+             ($("#11").css('background-color') === $("#12").css('background-color') ||
+             $("#23").css('background-color') === $("#33").css('background-color') ||
+             $("#22").css('background-color') === $("#31").css('background-color')) 
+            ) {
+                $("#13").css({backgroundColor: 'white'});
+                return true;
+            };
+            if ( (IsFreeCell("11")) &&
+            ($("#12").css('background-color') === $("#13").css('background-color') ||
+             $("#21").css('background-color') === $("#31").css('background-color') ||
+             $("#22").css('background-color') === $("#33").css('background-color') )
+            ) {
+                $("#11").css({backgroundColor: 'white'});
+                return true;
+            }
+            if ((IsFreeCell("31")) &&
+            ($("#11").css('background-color') === $("#21").css('background-color') ||
+             $("#32").css('background-color') === $("#33").css('background-color') ||
+             $("#13").css('background-color') === $("#22").css('background-color') )
+            ) {
+                $("#31").css({backgroundColor: 'white'});
+                return true;
+            }
+            if ((IsFreeCell("33")) &&
+            ($("#13").css('background-color') === $("#23").css('background-color') ||
+             $("#31").css('background-color') === $("#32").css('background-color') ||
+             $("#11").css('background-color') === $("#22").css('background-color') )
+            ) {
+                $("#33").css({backgroundColor: 'white'});
+                return true;
+            }
+            if ((IsFreeCell("32")) &&
+            ($("#11").css('background-color') === $("#13").css('background-color') ||
+             $("#22").css('background-color') === $("#32").css('background-color'))
+            ) {                 
+                $("#12").css({backgroundColor: 'white'});
+                return true;
+            }
+            if ((IsFreeCell("21")) &&
+            ($("#11").css('background-color') === $("#31").css('background-color') ||
+             $("#22").css('background-color') === $("#23").css('background-color'))
+            ) {
+                $("#21").css({backgroundColor: 'white'});
+                return true;
+            }
+            if ((IsFreeCell("23")) &&
+            ($("#33").css('background-color') === $("#13").css('background-color') ||
+             $("#22").css('background-color') === $("#21").css('background-color'))
+            ) {
+                $("#23").css({backgroundColor: 'white'});
+                return true;
+            }
+            if ((IsFreeCell("32")) &&
+            ($("#31").css('background-color') === $("#33").css('background-color') ||
+             $("#22").css('background-color') === $("#12").css('background-color'))
+            ) {
+                $("#32").css({backgroundColor: 'white'});
+                return true;
+            }
+        return false;
+        }
+    }
+</script>
+
+<!-- Bootstrap-JavaScript-->
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+crossorigin="anonymous">
+</script>
+</body>
+</html>
